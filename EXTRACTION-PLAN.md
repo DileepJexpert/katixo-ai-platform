@@ -1,13 +1,11 @@
 # EXTRACTION-PLAN.md — shared `katixo-ai-platform`
 
-**Status: shared library delivered; app integration documented but NOT applied.** Per a follow-up
-decision, all changes are confined to **`katixo-ai-platform`** — the `katixo-ai-commons` library
-(with its tests) is the sole deliverable. The `katixo-docai` and `image-generator` refactors
-described below were implemented and validated (docai 36/36, image-gen 2/2 against the JAR), then
-**rolled back**, so both apps sit at their pre-refactor baseline. This document and `MIGRATION.md`
-describe the intended integration for when you choose to wire the apps up. Design decisions taken:
-thin `SidecarClient` base (no polling template); job DTOs as shared vocabulary only; dedicated
-`katixo_gpu` lock-authority DB; TTS/OCR left unguarded.
+**Status: APPLIED in all three repos.** Both apps depend on `katixo-ai-commons:0.1.0` and every GPU
+call (docai's Ollama; Studio's ComfyUI, rembg, esrgan, whisper, copilot Ollama) is wrapped in
+`GpuResourceGuard.runExclusively`. Branch `claude/charming-faraday-hp9nw1` in each repo. Test bars
+green: docai 36/36 (offline + privacy intact), Studio 2/2, commons 8/10 (+2 Docker-skipped). Design
+decisions taken: thin `SidecarClient` base (no polling template); job DTOs as shared vocabulary only;
+dedicated `katixo_gpu` lock-authority DB; TTS (CPU) and PaddleOCR (light/CPU) left unguarded.
 
 This is the Phase-0 discovery + proposal. It says exactly what moves into the shared
 library, what stays app-specific, the interface signatures, and how both apps route GPU
