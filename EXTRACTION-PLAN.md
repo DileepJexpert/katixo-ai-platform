@@ -1,10 +1,13 @@
 # EXTRACTION-PLAN.md — shared `katixo-ai-platform`
 
-**Status: APPROVED & EXECUTED.** Decisions: thin `SidecarClient` base (no polling template); job
-DTOs as shared vocabulary only (no app migration); dedicated `katixo_gpu` lock-authority DB; TTS/OCR
-left unguarded; branch `claude/charming-faraday-hp9nw1` in all three repos. `katixo-ai-commons`
-builds + installs; `katixo-docai` (36/36) and `image-generator` (2/2) pass against the JAR. See
-`MIGRATION.md` for how the apps consume it. This document is retained as the design record.
+**Status: shared library delivered; app integration documented but NOT applied.** Per a follow-up
+decision, all changes are confined to **`katixo-ai-platform`** — the `katixo-ai-commons` library
+(with its tests) is the sole deliverable. The `katixo-docai` and `image-generator` refactors
+described below were implemented and validated (docai 36/36, image-gen 2/2 against the JAR), then
+**rolled back**, so both apps sit at their pre-refactor baseline. This document and `MIGRATION.md`
+describe the intended integration for when you choose to wire the apps up. Design decisions taken:
+thin `SidecarClient` base (no polling template); job DTOs as shared vocabulary only; dedicated
+`katixo_gpu` lock-authority DB; TTS/OCR left unguarded.
 
 This is the Phase-0 discovery + proposal. It says exactly what moves into the shared
 library, what stays app-specific, the interface signatures, and how both apps route GPU

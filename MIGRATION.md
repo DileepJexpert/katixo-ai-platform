@@ -3,6 +3,10 @@
 How `katixo-docai` and `image-generator` depend on the shared library, how the single-GPU guard
 is wired, and how to bump the library version. Pairs with `EXTRACTION-PLAN.md` (the design).
 
+> **Current state:** the two apps are **not** wired to this library right now — the integration was
+> rolled back so all changes stay confined to `katixo-ai-platform`. The steps below are how to apply
+> it when you want it. The library itself builds, tests, and installs independently.
+
 ---
 
 ## 1. What the library gives you
